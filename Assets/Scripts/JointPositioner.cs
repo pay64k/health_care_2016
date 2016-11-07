@@ -11,9 +11,8 @@ public class JointPositioner : MonoBehaviour {
 	public bool fixateZ = true;
     public bool debugMode;
 
-    public float speed = 10.0F;
-    public float rotationSpeed = 100.0F;
     private Vector3 position;
+    
 
     // Use this for initialization
     void Start () {
