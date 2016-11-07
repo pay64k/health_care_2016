@@ -5,6 +5,8 @@ public class MainGameController : MonoBehaviour
 {
 
     public PositionIndicatorSpawner IndicatorSpawner;
+    public ProjectileShooter ProjectileShooterLeft;
+    public ProjectileShooter ProjectileShooterRight;
     public float activeTimeSeconds = 1f;
     public GameObject LeftHand;
     public GameObject RightHand;
@@ -12,6 +14,8 @@ public class MainGameController : MonoBehaviour
 
     private float spawnTimer = 0f;
     private bool indicatorsSpawned = false;
+    private bool leftProjectileSpawned = false;
+    private bool rightProjectileSpawned = false;
     private GameObject indicator1;
     private GameObject indicator2;
     //Variables for debugging
@@ -45,10 +49,30 @@ public class MainGameController : MonoBehaviour
             LeftHand.transform.position);
         float distanceInd2RightHand = Vector3.Distance(indicator2.transform.position,
             RightHand.transform.position);
-        //Debug.Log(distanceInd1LeftHand);
 
-        if (distanceInd1LeftHand <= shootThreshold) { left_light.SetActive(true); } else { left_light.SetActive(false); }
-        if (distanceInd2RightHand <= shootThreshold) { right_light.SetActive(true); } else { right_light.SetActive(false); }
+        if (distanceInd1LeftHand <= shootThreshold )
+        {
+            left_light.SetActive(true);
+            if (!leftProjectileSpawned)
+            {
+                leftProjectileSpawned = !leftProjectileSpawned;
+                ProjectileShooterLeft.CreateProjectile(LeftHand);
+            }
+            
+        } else {
+            left_light.SetActive(false);
+        }
+        if (distanceInd2RightHand <= shootThreshold)
+        {
+            right_light.SetActive(true);
+            if (!rightProjectileSpawned)
+            {
+                rightProjectileSpawned = !rightProjectileSpawned;
+                ProjectileShooterRight.CreateProjectile(RightHand);
+            }
+        } else {
+            right_light.SetActive(false);
+        }
 
 
         
