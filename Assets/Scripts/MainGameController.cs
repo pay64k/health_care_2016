@@ -7,6 +7,7 @@ public class MainGameController : MonoBehaviour
     public PositionIndicatorSpawner IndicatorSpawner;
     public ProjectileShooter ProjectileShooterLeft;
     public ProjectileShooter ProjectileShooterRight;
+    public GameObject targetPrefab;
     public GameConfig Config;
         
     public GameObject leftHand;
@@ -48,16 +49,8 @@ public class MainGameController : MonoBehaviour
         coordCounter = 0;
         coordAmount = coordList.Count;
 
-        //foreach (Coordinates i in coordList)
-        //{
-        //    Debug.Log(i.coordLeft.ToString());
-        //}
-
-        //Debug.Log(((Coordinates)coordList[2]).coordLeft);
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!indicatorsSpawned)
@@ -68,8 +61,23 @@ public class MainGameController : MonoBehaviour
             indicator1 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordLeft);
             indicator2 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordRight);
 
+            GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,10), this.transform.rotation) as GameObject;
+            GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,12.5f), this.transform.rotation) as GameObject;
+            GameObject newObject3 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,15), this.transform.rotation) as GameObject;
+            GameObject newObject4 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,17.5f), this.transform.rotation) as GameObject;
+
+            GameObject newObject5 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 10), this.transform.rotation) as GameObject;
+            GameObject newObject6 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
+            GameObject newObject7 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 15), this.transform.rotation) as GameObject;
+            GameObject newObject8 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
+
+            //check if all targets are shot down
+                //if not reset targets if timer reaches activeTimeSeconds
+                //if yes set timer to activeTimeSeconds 
+
             coordCounter++;
             indicatorsSpawned = !indicatorsSpawned;
+
             //if all figures has been shown then start from beginning
             if (coordCounter >= coordAmount)
             {

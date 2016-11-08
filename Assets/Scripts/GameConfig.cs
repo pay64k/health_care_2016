@@ -12,6 +12,8 @@ public class GameConfig : MonoBehaviour
     public float projectileSpawnSpread;
     public float projectileTravelSpeed;
 
+    public float targetHealth;
+
     public float indicatorsActiveTimeSec;
 
 
