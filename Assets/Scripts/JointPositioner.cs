@@ -6,7 +6,9 @@ public class JointPositioner : MonoBehaviour {
 	public KinectWrapper.Joints JointToTrack;
 	public KUInterface Kinect;
     public GameConfig Config;
-    
+
+    public bool mirrored;
+
     public bool fixateX = true;
 	public bool fixateY = true;
 	public bool fixateZ = true;
@@ -43,10 +45,20 @@ public class JointPositioner : MonoBehaviour {
         else
         {
             position = Input.mousePosition;
-            position = new Vector3(
-                MapValue(position.x,0,1800,-20,20),
-                MapValue(position.y, 0, 1000, -15, 15),
-                0);
+            if (mirrored)
+            {
+                position = new Vector3(
+                    -MapValue(position.x,0,1800,-20,20),
+                    MapValue(position.y, 0, 1000, -15, 15),
+                    0);
+            }
+            else
+            {
+                position = new Vector3(
+                    MapValue(position.x, 0, 1800, -20, 20),
+                    MapValue(position.y, 0, 1000, -15, 15),
+                    0);
+            }
             transform.localPosition = position;
             
         }
