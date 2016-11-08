@@ -5,19 +5,21 @@ public class JointPositioner : MonoBehaviour {
 	
 	public KinectWrapper.Joints JointToTrack;
 	public KUInterface Kinect;
-	
-	public bool fixateX = true;
+    public GameConfig Config;
+    
+    public bool fixateX = true;
 	public bool fixateY = true;
 	public bool fixateZ = true;
-    public bool debugMode;
+
+    private bool debugMode;
 
     private Vector3 position;
     
 
     // Use this for initialization
     void Start () {
-
-	}
+        debugMode = Config.handMouseControl;
+    }
 	
 	// Update is called once per frame
 	void Update () {

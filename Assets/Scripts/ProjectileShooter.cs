@@ -14,12 +14,11 @@ public class ProjectileShooter : MonoBehaviour {
 	
 	}
 
-    public GameObject CreateProjectile(GameObject projectileSource)
+    public void CreateProjectile(GameObject projectileSource)
     {
         GameObject projectile = Instantiate(projectilePrefab) as GameObject;
         projectile.transform.position = transform.position + projectileSource.transform.forward;
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = projectileSource.transform.up * travelSpeed;
-        return projectile;
     }
 }

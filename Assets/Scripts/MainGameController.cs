@@ -7,17 +7,23 @@ public class MainGameController : MonoBehaviour
     public PositionIndicatorSpawner IndicatorSpawner;
     public ProjectileShooter ProjectileShooterLeft;
     public ProjectileShooter ProjectileShooterRight;
-    public float activeTimeSeconds = 1f;
+    public GameConfig Config;
+        
     public GameObject LeftHand;
     public GameObject RightHand;
-    public float shootThreshold = 0.1f;
 
+    private float shootThreshold;
+    private float activeTimeSeconds;
+    private float shootIntervalTime;
+    
     private float spawnTimer = 0f;
+    private float shootTimer = 0f;
     private bool indicatorsSpawned = false;
     private bool leftProjectileSpawned = false;
     private bool rightProjectileSpawned = false;
     private GameObject indicator1;
     private GameObject indicator2;
+
     //Variables for debugging
     private GameObject left_light;
     private GameObject right_light;
@@ -25,6 +31,9 @@ public class MainGameController : MonoBehaviour
     {
         left_light = GameObject.Find("Debugging/left_light");
         right_light = GameObject.Find("Debugging/right_light");
+        activeTimeSeconds = Config.IndicatorsActiveTimeSec;
+        shootThreshold = Config.ShootThreshold;
+        shootIntervalTime = Config.ShootIntervalTimer;
     }
 
     // Update is called once per frame
@@ -53,31 +62,30 @@ public class MainGameController : MonoBehaviour
         if (distanceInd1LeftHand <= shootThreshold )
         {
             left_light.SetActive(true);
-            if (!leftProjectileSpawned)
-            {
-                leftProjectileSpawned = !leftProjectileSpawned;
-                ProjectileShooterLeft.CreateProjectile(LeftHand);
-            }
-            
+            ShootWithInterval(shootIntervalTime, LeftHand);
+
         } else {
             left_light.SetActive(false);
         }
         if (distanceInd2RightHand <= shootThreshold)
         {
             right_light.SetActive(true);
-            if (!rightProjectileSpawned)
-            {
-                rightProjectileSpawned = !rightProjectileSpawned;
-                ProjectileShooterRight.CreateProjectile(RightHand);
-            }
+            ShootWithInterval(shootIntervalTime, RightHand);
+            
         } else {
             right_light.SetActive(false);
         }
 
-
-        
-
-
-
     }
+
+    void ShootWithInterval(float interval, GameObject shootSource)
+    {
+        shootTimer += Time.deltaTime;
+        if(shootTimer > shootIntervalTime)
+        {
+            ProjectileShooterLeft.CreateProjectile(shootSource);
+            shootTimer = 0;
+        }
+    }
+
 }
