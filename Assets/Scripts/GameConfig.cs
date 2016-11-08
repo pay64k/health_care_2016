@@ -9,6 +9,9 @@ public class GameConfig : MonoBehaviour
     public float shootThreshold;
     public float shootIntervalTimer;
 
+    public float projectileSpawnSpread;
+    public float projectileTravelSpeed;
+
     public float indicatorsActiveTimeSec;
 
 
@@ -61,6 +64,32 @@ public class GameConfig : MonoBehaviour
         set
         {
             shootIntervalTimer = value;
+        }
+    }
+
+    public float ProjectileSpawnSpread
+    {
+        get
+        {
+            return projectileSpawnSpread;
+        }
+
+        set
+        {
+            projectileSpawnSpread = value;
+        }
+    }
+
+    public float ProjectileTravelSpeed
+    {
+        get
+        {
+            return projectileTravelSpeed;
+        }
+
+        set
+        {
+            projectileTravelSpeed = value;
         }
     }
 }
