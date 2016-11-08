@@ -29,6 +29,9 @@ public class MainGameController : MonoBehaviour
     private bool leftInPosition;
     private bool rightInPosition;
 
+    private ArrayList coordList;
+    private Coordinates coord;
+
     //Variables for debugging
     private GameObject left_light;
     private GameObject right_light;
@@ -39,6 +42,16 @@ public class MainGameController : MonoBehaviour
         activeTimeSeconds = Config.IndicatorsActiveTimeSec;
         shootThreshold = Config.ShootThreshold;
         shootIntervalTime = Config.ShootIntervalTimer;
+
+        coordList = new ArrayList();
+        coordList = fillCoordList(coordList);
+
+        foreach (Coordinates i in coordList)
+        {
+            Debug.Log(i.coordLeft.ToString());
+        }
+        Debug.Log(coordList[2] as Coordinates);
+
     }
 
     // Update is called once per frame
@@ -124,5 +137,18 @@ public class MainGameController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    ArrayList fillCoordList(ArrayList list)
+    { 
+        // left and right indicator position
+        list.Add(new Coordinates(new Vector3(-5,-3,0), new Vector3(5,-3,0)));
+        list.Add(new Coordinates(new Vector3(-5,-2,0), new Vector3(5,-2,0)));
+        list.Add(new Coordinates(new Vector3(-5,-1,0), new Vector3(5,-1,0)));
+        list.Add(new Coordinates(new Vector3(-5,0,0), new Vector3(5,0,0)));
+        list.Add(new Coordinates(new Vector3(-5,1,0), new Vector3(5,1,0)));
+        list.Add(new Coordinates(new Vector3(-5,2,0), new Vector3(5,2,0)));
+        list.Add(new Coordinates(new Vector3(-5,3,0), new Vector3(5,3,0)));
+        return list;
     }
 }
