@@ -9,14 +9,17 @@ public class MainGameController : MonoBehaviour
     public ProjectileShooter ProjectileShooterRight;
     public GameObject targetPrefab;
     public GameConfig Config;
-        
+
     public GameObject leftHand;
     public GameObject rightHand;
+
+    public float leftDistance;
+    public float rightDistance;
 
     private float shootThreshold;
     private float activeTimeSeconds;
     private float shootIntervalTime;
-    
+
     private float leftShootTimer = 0f;
     private float rightShootTimer = 0f;
 
@@ -61,10 +64,12 @@ public class MainGameController : MonoBehaviour
             indicator1 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordLeft);
             indicator2 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordRight);
 
-            GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,10), this.transform.rotation) as GameObject;
-            GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,12.5f), this.transform.rotation) as GameObject;
-            GameObject newObject3 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,15), this.transform.rotation) as GameObject;
-            GameObject newObject4 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0,17.5f), this.transform.rotation) as GameObject;
+            //indicator1.transform.Rotate(Vector3.up, 120f);
+
+            GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 10), this.transform.rotation) as GameObject;
+            GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
+            GameObject newObject3 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 15), this.transform.rotation) as GameObject;
+            GameObject newObject4 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
 
             GameObject newObject5 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 10), this.transform.rotation) as GameObject;
             GameObject newObject6 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
@@ -72,8 +77,8 @@ public class MainGameController : MonoBehaviour
             GameObject newObject8 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
 
             //check if all targets are shot down
-                //if not reset targets if timer reaches activeTimeSeconds
-                //if yes set timer to activeTimeSeconds 
+            //if not reset targets if timer reaches activeTimeSeconds
+            //if yes set timer to activeTimeSeconds 
 
             coordCounter++;
             indicatorsSpawned = !indicatorsSpawned;
@@ -115,12 +120,12 @@ public class MainGameController : MonoBehaviour
         {
             right_light.SetActive(true);
             //ShootWithInterval(shootIntervalTime, RightHand);
-            
+
         } else {
             right_light.SetActive(false);
         }
 
-        if(leftInPosition & rightInPosition)
+        if (leftInPosition & rightInPosition)
         {
             ShootWithInterval(shootIntervalTime, leftHand);
             ShootWithInterval(shootIntervalTime, rightHand);
@@ -133,12 +138,12 @@ public class MainGameController : MonoBehaviour
         if (shootSource.Equals(leftHand))
         {
             leftShootTimer += Time.deltaTime;
-            if(leftShootTimer > shootIntervalTime)
+            if (leftShootTimer > shootIntervalTime)
             {
                 ProjectileShooterLeft.CreateProjectile(shootSource);
                 leftShootTimer = 0;
             }
-        }else
+        } else
         {
             rightShootTimer += Time.deltaTime;
             if (rightShootTimer > shootIntervalTime)
@@ -152,24 +157,46 @@ public class MainGameController : MonoBehaviour
 
     bool checkDistance(GameObject object1, GameObject object2, float threshold)
     {
-        float distance = Vector3.Distance(object1.transform.position, object2.transform.position);
-        if(distance <= threshold)
+        float distance = getDistance(object1, object2);
+        saveDistanceToVariable(object2, distance);
+        if (distance <= threshold)
         {
             return true;
         }
         return false;
     }
 
+    float getDistance(GameObject object1, GameObject object2)
+    {
+        return Vector3.Distance(object1.transform.position, object2.transform.position); ;
+    }
+
     ArrayList fillCoordList(ArrayList list)
-    { 
+    {
         // left and right indicator position
-        list.Add(new Coordinates(new Vector3(-5,-3,0), new Vector3(5,-3,0)));
-        list.Add(new Coordinates(new Vector3(-5,-2,0), new Vector3(5,-2,0)));
-        list.Add(new Coordinates(new Vector3(-5,-1,0), new Vector3(5,-1,0)));
-        list.Add(new Coordinates(new Vector3(-5,0,0), new Vector3(5,0,0)));
-        list.Add(new Coordinates(new Vector3(-5,1,0), new Vector3(5,1,0)));
-        list.Add(new Coordinates(new Vector3(-5,2,0), new Vector3(5,2,0)));
-        list.Add(new Coordinates(new Vector3(-5,3,0), new Vector3(5,3,0)));
+        list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
         return list;
+    }
+
+    void saveDistanceToVariable(GameObject obj, float dist)
+    {
+        if (obj.Equals(leftHand))
+        {
+            leftDistance = dist;
+        }else
+        {
+            rightDistance = dist;
+        }
+    }
+
+    public float Bla()
+    {
+        return coordCounter;
     }
 }
