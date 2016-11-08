@@ -11,5 +11,4 @@ public class Coordinates {
         coordLeft = left;
         coordRight = right;
     }
-
 }

@@ -21,8 +21,6 @@ public class MainGameController : MonoBehaviour
 
     private float spawnTimer = 0f;
     private bool indicatorsSpawned = false;
-    private bool leftProjectileSpawned = false;
-    private bool rightProjectileSpawned = false;
 
     private GameObject indicator1;
     private GameObject indicator2;
@@ -31,6 +29,8 @@ public class MainGameController : MonoBehaviour
 
     private ArrayList coordList;
     private Coordinates coord;
+    private int coordCounter;
+    private int coordAmount;
 
     //Variables for debugging
     private GameObject left_light;
@@ -45,12 +45,15 @@ public class MainGameController : MonoBehaviour
 
         coordList = new ArrayList();
         coordList = fillCoordList(coordList);
+        coordCounter = 0;
+        coordAmount = coordList.Count;
 
-        foreach (Coordinates i in coordList)
-        {
-            Debug.Log(i.coordLeft.ToString());
-        }
-        Debug.Log(coordList[2] as Coordinates);
+        //foreach (Coordinates i in coordList)
+        //{
+        //    Debug.Log(i.coordLeft.ToString());
+        //}
+
+        //Debug.Log(((Coordinates)coordList[2]).coordLeft);
 
     }
 
@@ -59,9 +62,19 @@ public class MainGameController : MonoBehaviour
     {
         if (!indicatorsSpawned)
         {
-            indicator1 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(-6.0f, -2.0f), Random.Range(-8.0f, 8.0f), 0));
-            indicator2 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(2.0f, 6.0f), Random.Range(-8.0f, 8.0f), 0));
+            //indicator1 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(-6.0f, -2.0f), Random.Range(-8.0f, 8.0f), 0));
+            //indicator2 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(2.0f, 6.0f), Random.Range(-8.0f, 8.0f), 0));
+
+            indicator1 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordLeft);
+            indicator2 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordRight);
+
+            coordCounter++;
             indicatorsSpawned = !indicatorsSpawned;
+            //if all figures has been shown then start from beginning
+            if (coordCounter >= coordAmount)
+            {
+                coordCounter = 0;
+            }
         }
 
         spawnTimer += Time.deltaTime;
