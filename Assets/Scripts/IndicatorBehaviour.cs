@@ -8,8 +8,8 @@ public class IndicatorBehaviour : MonoBehaviour {
     private float distance;
     public GameObject side;
 
-    public Color startcolor = Color.red;
-    public Color endcolor = Color.green;
+    public Color startColor = Color.green;
+    public Color endColor = Color.red;
 
     public float maxdistance = 15f;
 
@@ -42,12 +42,15 @@ public class IndicatorBehaviour : MonoBehaviour {
 
         //do the color changing here using gameObject.GetComponent<>()
 
-        transform.GetComponent<Renderer>().material.color = Color.Lerp(Color.green, Color.red, distance / maxdistance);
+        //transform.GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, distance / maxdistance);
+
+        Component[] children = GetComponentsInChildren<Renderer>();
+        foreach (Renderer rende in children)
+        {
+            rende.material.color = Color.Lerp(startColor, endColor, distance / maxdistance);
+        }
+
         
 	}
 
-    private static float MapValue(float value, float from1, float to1, float from2, float to2)
-    {
-        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
-    }
 }
