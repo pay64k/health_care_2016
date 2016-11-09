@@ -40,7 +40,7 @@ public class JointPositioner : MonoBehaviour {
             if (!fixateZ)
                 center.z = 0;
             //Position this object according to chosen joint, but do it relative to the ShoulderCenter position
-            transform.localPosition = Kinect.GetJointPos(JointToTrack) - center;
+            transform.localPosition = Vector3.Scale(Kinect.GetJointPos(JointToTrack) - center,new Vector3(1,1,-1));
         }
         else
         {
