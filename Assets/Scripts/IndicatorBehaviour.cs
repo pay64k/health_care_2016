@@ -50,6 +50,7 @@ public class IndicatorBehaviour : MonoBehaviour {
             rende.material.color = Color.Lerp(startColor, endColor, distance / maxdistance);
         }
 
+        transform.Rotate(new Vector3(0, (Time.deltaTime * distance) *10,0 ));
         
 	}
 
