@@ -16,6 +16,8 @@ public class MainGameController : MonoBehaviour
     public float leftDistance;
     public float rightDistance;
 
+    private bool debugMode;
+
     private float shootThreshold;
     private float activeTimeSeconds;
     private float shootIntervalTime;
@@ -47,6 +49,8 @@ public class MainGameController : MonoBehaviour
         shootThreshold = Config.ShootThreshold;
         shootIntervalTime = Config.ShootIntervalTimer;
 
+        debugMode = Config.handMouseControl;
+
         coordList = new ArrayList();
         coordList = fillCoordList(coordList);
         coordCounter = 0;
@@ -65,6 +69,13 @@ public class MainGameController : MonoBehaviour
             indicator2 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordRight, rightHand);
 
             //indicator1.transform.Rotate(Vector3.up, 120f);
+
+            //foreach(Coordinates cord in coordList)
+            //{
+            //    Instantiate(targetPrefab, coord.coordLeft, transform.rotation);
+            //    Instantiate(targetPrefab, coord.coordRight, transform.rotation);
+
+            //}
 
             GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 10), this.transform.rotation) as GameObject;
             GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
@@ -108,7 +119,7 @@ public class MainGameController : MonoBehaviour
         rightInPosition = checkDistance(indicator2, rightHand, shootThreshold);
 
 
-        if (leftInPosition)
+        if (leftInPosition & debugMode)
         {
             left_light.SetActive(true);
             //ShootWithInterval(shootIntervalTime, LeftHand);
@@ -116,7 +127,7 @@ public class MainGameController : MonoBehaviour
         } else {
             left_light.SetActive(false);
         }
-        if (rightInPosition)
+        if (rightInPosition & debugMode)
         {
             right_light.SetActive(true);
             //ShootWithInterval(shootIntervalTime, RightHand);
@@ -174,13 +185,25 @@ public class MainGameController : MonoBehaviour
     ArrayList fillCoordList(ArrayList list)
     {
         // left and right indicator position
-        list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
-        list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
-        list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+
+        list.Add(new Coordinates(new Vector3(-7.6f, -6.3f, 4.8f), new Vector3(9.5f, -5.8f, 2.1f)));
+        list.Add(new Coordinates(new Vector3(0.0f, -3.8f, 0.9f), new Vector3(6.6f, -11, 1.1f)));
+        list.Add(new Coordinates(new Vector3(-5.6f, 0.7f, -1.6f), new Vector3(6.0f, -7.5f, -1.6f)));
+        list.Add(new Coordinates(new Vector3(-7.1f, -10, 0.8f), new Vector3(4.9f, 0.4f, -1.1f)));
+        list.Add(new Coordinates(new Vector3(-7.4f, -8.2f, 0.6f), new Vector3(4.8f, -0.4f, -0.9f)));
+        list.Add(new Coordinates(new Vector3(-4, 2, -0.4f), new Vector3(5, 0.9f, -1.7f)));
+        list.Add(new Coordinates(new Vector3(-4.1f, -12.9f, 0.5f), new Vector3(4.9f, -12.4f, 0.2f)));
+        list.Add(new Coordinates(new Vector3(-8.5f, -4.6f, 0.4f), new Vector3(2.5f, -4.8f, 1.1f)));
+        list.Add(new Coordinates(new Vector3(-4.6f, -4.2f, 0.2f), new Vector3(4.7f, -4.4f, -0.5f)));
+        list.Add(new Coordinates(new Vector3(-3.0f, -3.7f, -8.1f), new Vector3(3.5f, -3.8f, -8.5f)));
+
         return list;
     }
 
