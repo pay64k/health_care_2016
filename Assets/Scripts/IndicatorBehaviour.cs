@@ -8,6 +8,11 @@ public class IndicatorBehaviour : MonoBehaviour {
     private float distance;
     public GameObject side;
 
+    public Color startcolor = Color.red;
+    public Color endcolor = Color.green;
+
+    public float maxdistance = 15f;
+
     // Use this for initialization
 	void Start () {
         GameObject controllerObject = GameObject.Find("Main Game Controller");
@@ -29,12 +34,15 @@ public class IndicatorBehaviour : MonoBehaviour {
         //    distance = controller.rightDistance;
         //}
 
+
         distance = (hand == "HAND_LEFT") ? controller.leftDistance : controller.rightDistance;
 
         //Debug.Log(gameObject.GetComponent<Rigidbody>().isKinematic);
         //Debug.Log(hand + " " + distance.ToString());
 
         //do the color changing here using gameObject.GetComponent<>()
+
+        transform.GetComponent<Renderer>().material.color = Color.Lerp(Color.green, Color.red, distance / maxdistance);
         
 	}
 
