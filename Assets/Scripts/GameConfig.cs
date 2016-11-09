@@ -15,7 +15,7 @@ public class GameConfig : MonoBehaviour
     public float targetHealth;
 
     public float indicatorsActiveTimeSec;
-
+    public float indicatorSpinSpeed;
 
     public float ShootThreshold
     {

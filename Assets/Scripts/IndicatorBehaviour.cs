@@ -4,6 +4,7 @@ using System.Collections;
 public class IndicatorBehaviour : MonoBehaviour {
 
     private MainGameController controller;
+    private GameConfig config;
     private string hand;
     private float distance;
     public GameObject side;
@@ -12,13 +13,19 @@ public class IndicatorBehaviour : MonoBehaviour {
     public Color endColor = Color.red;
 
     public float maxdistance = 15f;
+    public float spinMultiplier;
 
     // Use this for initialization
 	void Start () {
         GameObject controllerObject = GameObject.Find("Main Game Controller");
         controller = controllerObject.GetComponent<MainGameController>();
         hand = side.GetComponent<JointPositioner>().JointToTrack.ToString();
-	}
+
+        GameObject configObject = GameObject.Find("Game Settings");
+        config = configObject.GetComponent<GameConfig>();
+        spinMultiplier = config.indicatorSpinSpeed;
+
+    }
 	
 	void Update () {
         //Debug.Log(controller.leftDistance);
@@ -50,7 +57,7 @@ public class IndicatorBehaviour : MonoBehaviour {
             rende.material.color = Color.Lerp(startColor, endColor, distance / maxdistance);
         }
 
-        transform.Rotate(new Vector3(0, (Time.deltaTime * distance) *10,0 ));
+        transform.Rotate(new Vector3(0, (Time.deltaTime * distance) * spinMultiplier, 0 ));
         
 	}
 
