@@ -20,14 +20,16 @@ public class IndicatorBehaviour : MonoBehaviour {
         //if side == left get leftDistance etc
         //JointPositioner bla = side.GetComponent<JointPositioner>();
         //Debug.Log(bla.JointToTrack.ToString());
-        if (hand == "HAND_LEFT")
-        {
-            distance = controller.leftDistance;
-        }
-        else
-        {
-            distance = controller.rightDistance;
-        }
+        //if (hand == "HAND_LEFT")
+        //{
+        //    distance = controller.leftDistance;
+        //}
+        //else
+        //{
+        //    distance = controller.rightDistance;
+        //}
+
+        distance = (hand == "HAND_LEFT") ? controller.leftDistance : controller.rightDistance;
 
         //Debug.Log(gameObject.GetComponent<Rigidbody>().isKinematic);
         //Debug.Log(hand + " " + distance.ToString());
