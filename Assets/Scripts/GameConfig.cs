@@ -17,6 +17,8 @@ public class GameConfig : MonoBehaviour
     public float indicatorsActiveTimeSec;
     public float indicatorSpinSpeed;
 
+    public bool easyMode;
+
     public float ShootThreshold
     {
         get
@@ -95,3 +97,5 @@ public class GameConfig : MonoBehaviour
         }
     }
 }
+
+

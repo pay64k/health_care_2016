@@ -16,11 +16,13 @@ public class JointPositioner : MonoBehaviour {
     private bool debugMode;
 
     private Vector3 position;
+    private bool easyMode;
     
 
     // Use this for initialization
     void Start () {
         debugMode = Config.handMouseControl;
+        easyMode = Config.easyMode;
     }
 	
 	// Update is called once per frame
@@ -39,8 +41,19 @@ public class JointPositioner : MonoBehaviour {
                 center.y = 0;
             if (!fixateZ)
                 center.z = 0;
-            //Position this object according to chosen joint, but do it relative to the ShoulderCenter position
-            transform.localPosition = Vector3.Scale(Kinect.GetJointPos(JointToTrack) - center,new Vector3(1,1,-1));
+            if (easyMode)
+            {
+                var temp = Vector3.Scale(Kinect.GetJointPos(JointToTrack) - center, new Vector3(1, 1, -1));
+                var tempX = temp.x;
+                var tempY = temp.y;
+                transform.localPosition = new Vector3(tempX, tempY, 0); 
+            }
+            else
+            {
+                //Position this object according to chosen joint, but do it relative to the ShoulderCenter position
+                transform.localPosition = Vector3.Scale(Kinect.GetJointPos(JointToTrack) - center, new Vector3(1, 1, -1));
+            }
+
         }
         else
         {

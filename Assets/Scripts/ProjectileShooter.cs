@@ -5,6 +5,7 @@ public class ProjectileShooter : MonoBehaviour {
 
     public GameObject projectilePrefab;
     public GameConfig Config;
+    public AudioClip [] clips;
 
     private float travelSpeed;
     private float projectileSpread;
@@ -25,5 +26,16 @@ public class ProjectileShooter : MonoBehaviour {
         projectile.transform.position = transform.position + projectileSource.transform.forward + new Vector3(Random.Range(-projectileSpread, projectileSpread),0,0);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = projectileSource.transform.up * travelSpeed;
+        playShootSound();
+    }
+    public void playShootSound()
+    {
+        //if (GetComponent<AudioSource>().isPlaying)
+        //{
+        //    return;
+        //}
+        int clipPick = Random.Range(0, clips.Length);
+        GetComponent<AudioSource>().clip = clips[clipPick];
+        GetComponent<AudioSource>().Play();
     }
 }
