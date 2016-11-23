@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TargetBehaviour : MonoBehaviour {
 
+    public MainGameController controller;
 
     public float health;
     public GameObject explosion;
@@ -21,6 +22,8 @@ public class TargetBehaviour : MonoBehaviour {
         originalPosition = transform.position;
         //print("Orignial Position" + originalPosition.ToString());
         multi = Random.Range(1, 4);
+        GameObject controllerObject = GameObject.Find("Main Game Controller");
+        controller = controllerObject.GetComponent<MainGameController>();
     }
 	
 	void Update () {
@@ -50,6 +53,8 @@ public class TargetBehaviour : MonoBehaviour {
         //newX = newX * Time.deltaTime;
         transform.position = new Vector3(newX + originalPosition.x, originalPosition.y, originalPosition.z);
         //transform.rotation = 
+
+        
         
 	}
 
@@ -73,9 +78,16 @@ public class TargetBehaviour : MonoBehaviour {
             //this.GetComponent<Rigidbody>().AddTorque(transform.forward * 400);
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
+            controller.DecrementEnemyCount();
         }
 
 
+    }
+
+    public void PrematureDestroy()
+    {
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
 

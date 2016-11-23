@@ -38,8 +38,8 @@ public class MainGameController : MonoBehaviour
     private int coordCounter;
     private int coordAmount;
 
-    private ArrayList targets;
-    private int amountOfTargets;
+    public ArrayList targets;
+    public int amountOfTargets;
 
     //Variables for debugging
     private GameObject left_light;
@@ -60,7 +60,7 @@ public class MainGameController : MonoBehaviour
         coordAmount = coordList.Count;
 
         targets = new ArrayList();
-        amountOfTargets = 4;
+        amountOfTargets = 0;
 
     }
 
@@ -93,13 +93,12 @@ public class MainGameController : MonoBehaviour
             //GameObject newObject7 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 15), this.transform.rotation) as GameObject;
             //GameObject newObject8 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
 
-            for (float i = 10f; i <= amountOfTargets; i = i + 2.5f)
+            for (float i = 10f; i <= 17.5f; i = i + 2.5f)
             {
-                SpawnEnemy(targetPrefab, coordList, "LEFT", new Vector3(0, 10f), coordCounter);
-                SpawnEnemy(targetPrefab, coordList, "RIGHT", new Vector3(0, 10f), coordCounter);
+                targets.Add(SpawnEnemy(targetPrefab, coordList, "LEFT", new Vector3(0, i), coordCounter));
+                targets.Add(SpawnEnemy(targetPrefab, coordList, "RIGHT", new Vector3(0, i), coordCounter));
+                amountOfTargets = amountOfTargets + 2;
             }
-
-
 
             //check if all targets are shot down
             //if not reset targets if timer reaches activeTimeSeconds
@@ -115,12 +114,28 @@ public class MainGameController : MonoBehaviour
             }
         }
 
+        if (amountOfTargets == 0)
+        {
+            Destroy(indicator1, 0);
+            Destroy(indicator2, 0);
+            spawnTimer = 0;
+            targets.Clear();
+            indicatorsSpawned = !indicatorsSpawned;
+        }
+
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= activeTimeSeconds)
         {
             Destroy(indicator1, 0);
             Destroy(indicator2, 0);
             spawnTimer = 0;
+            foreach (GameObject obj in targets)
+            {
+                if(!obj.Equals(null))
+                obj.GetComponent<TargetBehaviour>().PrematureDestroy();
+            }
+            targets.Clear();
+            ExecuteAfterTime(4);
             indicatorsSpawned = !indicatorsSpawned;
         }
 
@@ -155,7 +170,7 @@ public class MainGameController : MonoBehaviour
             ShootWithInterval(shootIntervalTime, leftHand);
             ShootWithInterval(shootIntervalTime, rightHand);
         }
-
+        //print(this.amountOfTargets);
     }
 
     void ShootWithInterval(float interval, GameObject shootSource)
@@ -233,8 +248,12 @@ public class MainGameController : MonoBehaviour
             GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[postitionCounter]).coordRight + offset, this.transform.rotation) as GameObject;
             return target;
         }
-
         
+    }
+
+    public void DecrementEnemyCount()
+    {
+        amountOfTargets = amountOfTargets - 1;
     }
 
     void saveDistanceToVariable(GameObject obj, float dist)
@@ -252,4 +271,16 @@ public class MainGameController : MonoBehaviour
     {
         return coordCounter;
     }
+
+    IEnumerator ExecuteAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        print("BLA");
+        // Code to execute after the delay
+    }
+
+
+
 }
+
+
