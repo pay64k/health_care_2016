@@ -116,7 +116,7 @@ public class MainGameController : MonoBehaviour
         currentGameTime = currentGameTime + Time.deltaTime;
         if (currentGameTime >= gameTime)
         {
-            score = 0;
+            //score = 0;
             currentGameTime = 0;
             counting = false;
             PlayEndGameScene();

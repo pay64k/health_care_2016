@@ -8,7 +8,7 @@ public class GameStarScene : MonoBehaviour {
     public GameObject start_text;
     public GameObject countdown_text;
     public GameObject info_text;
-    public GameObject audio;
+    public GameObject audio_song;
 
     private float timer;
     private float limit;
@@ -18,7 +18,7 @@ public class GameStarScene : MonoBehaviour {
         timer = 0;
         limit = 1.5f;
         countdown_text.SetActive(false);
-        DontDestroyOnLoad(audio);
+        DontDestroyOnLoad(audio_song);
 	}
 
 	// Update is called once per frame
