@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainGameController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MainGameController : MonoBehaviour
 
     public GameObject text_Great;
     public GameObject text_not_ok;
+    public GameObject timeRemainingText;
 
     public GameObject scoreText;
     private int score;
@@ -46,12 +48,14 @@ public class MainGameController : MonoBehaviour
     private int coordCounter;
     private int coordAmount;
 
-	public GameObject[] figures;
-	private GameObject currentFigure;
+    public GameObject[] figures;
+    private GameObject currentFigure;
 
     public ArrayList targets;
     private int amountOfTargets;
 
+    private float gameTime;
+    private float currentGameTime;
 
 
     //Variables for debugging
@@ -76,16 +80,33 @@ public class MainGameController : MonoBehaviour
         targets = new ArrayList();
         amountOfTargets = 0;
         score = 0;
+        DontDestroyOnLoad(scoreText);
 
-		foreach (GameObject obj in figures) {
-			obj.SetActive (false);
-		}
+        gameTime = Config.gameTime;
+        currentGameTime = 0;
+
+        foreach (GameObject obj in figures)
+        {
+            obj.SetActive(false);
+        }
 
 
     }
 
     void Update()
     {
+        currentGameTime = currentGameTime + Time.deltaTime;
+        if (currentGameTime >= gameTime)
+        {
+            PlayEndGameScene();
+        }
+
+        double remainingTime = gameTime - currentGameTime;
+        if (remainingTime >= 0)
+        {
+            timeRemainingText.GetComponent<TextMesh>().text = remainingTime.ToString("F1");
+        }
+
         if (!indicatorsSpawned)
         {
             //indicator1 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(-6.0f, -2.0f), Random.Range(-8.0f, 8.0f), 0));
@@ -133,7 +154,7 @@ public class MainGameController : MonoBehaviour
             //checkPostion = !checkPostion;
             StartCoroutine(DisplayGreatText(1));
             indicatorsSpawned = !indicatorsSpawned;
-			currentFigure.SetActive (false);
+            currentFigure.SetActive(false);
         }
 
         spawnTimer += Time.deltaTime;
@@ -144,24 +165,24 @@ public class MainGameController : MonoBehaviour
             spawnTimer = 0;
             foreach (GameObject obj in targets)
             {
-                if(!obj.Equals(null))
-                obj.GetComponent<TargetBehaviour>().PrematureDestroy();
+                if (!obj.Equals(null))
+                    obj.GetComponent<TargetBehaviour>().PrematureDestroy();
             }
             targets.Clear();
             amountOfTargets = 0;
             //StartCoroutine(Wait(3));
             //checkPostion = !checkPostion;
-            StartCoroutine(Display_not_Ok_Text(1));   
+            StartCoroutine(Display_not_Ok_Text(1));
             indicatorsSpawned = !indicatorsSpawned;
-			currentFigure.SetActive (false);
+            currentFigure.SetActive(false);
         }
 
 
-		//if all figures has been shown then start from beginning
-		if (coordCounter >= coordAmount)
-		{
-			coordCounter = 0;
-		}
+        //if all figures has been shown then start from beginning
+        if (coordCounter >= coordAmount)
+        {
+            coordCounter = 0;
+        }
 
         //float distanceInd1LeftHand = Vector3.Distance(indicator1.transform.position,
         //    leftHand.transform.position);
@@ -204,7 +225,8 @@ public class MainGameController : MonoBehaviour
                 ProjectileShooterLeft.CreateProjectile(shootSource);
                 leftShootTimer = 0;
             }
-        } else
+        }
+        else
         {
             rightShootTimer += Time.deltaTime;
             if (rightShootTimer > shootIntervalTime)
@@ -234,7 +256,7 @@ public class MainGameController : MonoBehaviour
 
     ArrayList fillCoordList(ArrayList list)
     {
-		//actual coordinates
+        //actual coordinates
         list.Add(new Coordinates(new Vector3(-13.7f, -4.0f, 0), new Vector3(13.3f, -4.4f, 0)));
         list.Add(new Coordinates(new Vector3(-2.5f, 8.9f, 0), new Vector3(6.9f, -6.9f, 0)));
         list.Add(new Coordinates(new Vector3(-5.9f, 6.6f, 0), new Vector3(5.3f, 5.9f, 0)));
@@ -271,8 +293,8 @@ public class MainGameController : MonoBehaviour
 
     GameObject SpawnEnemy(GameObject targetPrefab, ArrayList coordList, string side, Vector3 offset, int positionCounter)
     {
-		currentFigure = figures [positionCounter];
-		currentFigure.SetActive (true);
+        currentFigure = figures[positionCounter];
+        currentFigure.SetActive(true);
 
         if (side.Equals("LEFT"))
         {
@@ -286,7 +308,7 @@ public class MainGameController : MonoBehaviour
         }
 
 
-        
+
     }
 
     public void DecrementEnemyCount()
@@ -305,7 +327,8 @@ public class MainGameController : MonoBehaviour
         if (obj.Equals(leftHand))
         {
             leftDistance = dist;
-        }else
+        }
+        else
         {
             rightDistance = dist;
         }
@@ -327,6 +350,11 @@ public class MainGameController : MonoBehaviour
 
     }
 
+    public void PlayEndGameScene()
+    {
+        SceneManager.LoadScene(2);
+
+    }
 }
 
 

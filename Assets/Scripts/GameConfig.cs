@@ -19,6 +19,8 @@ public class GameConfig : MonoBehaviour
 
     public bool easyMode;
 
+    public float gameTime;
+
     public float ShootThreshold
     {
         get
@@ -29,6 +31,19 @@ public class GameConfig : MonoBehaviour
         set
         {
             shootThreshold = value;
+        }
+    }
+
+    public float GameTime
+    {
+        get
+        {
+            return gameTime;
+        }
+
+        set
+        {
+            gameTime = value;
         }
     }
 
