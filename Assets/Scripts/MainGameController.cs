@@ -56,6 +56,7 @@ public class MainGameController : MonoBehaviour
 
     private float gameTime;
     private float currentGameTime;
+    private bool counting;
 
     private ArrayList ok_text_arraylist;
 
@@ -86,6 +87,7 @@ public class MainGameController : MonoBehaviour
         gameTime = Config.gameTime;
         currentGameTime = 0;
         text_Great.SetActive(false);
+        counting = true;
 
         foreach (GameObject obj in figures)
         {
@@ -115,23 +117,22 @@ public class MainGameController : MonoBehaviour
         if (currentGameTime >= gameTime)
         {
             score = 0;
+            currentGameTime = 0;
+            counting = false;
             PlayEndGameScene();
         }
 
         double remainingTime = gameTime - currentGameTime;
-        if (remainingTime >= 0)
+
+        if (remainingTime >= 0 && counting)
         {
             timeRemainingText.GetComponent<TextMesh>().text = remainingTime.ToString("F1");
         }
 
         if (!indicatorsSpawned)
         {
-            //indicator1 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(-6.0f, -2.0f), Random.Range(-8.0f, 8.0f), 0));
-            //indicator2 = IndicatorSpawner.SpawnIndicator(new Vector3(Random.Range(2.0f, 6.0f), Random.Range(-8.0f, 8.0f), 0));
-
             indicator1 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordLeft, leftHand);
             indicator2 = IndicatorSpawner.SpawnIndicator(((Coordinates)coordList[coordCounter]).coordRight, rightHand);
-
 
             for (float i = 10f; i <= 19f; i = i + 3f)
             {
@@ -139,10 +140,6 @@ public class MainGameController : MonoBehaviour
                 targets.Add(SpawnEnemy(targetPrefab, coordList, "RIGHT", new Vector3(0, i), coordCounter));
                 amountOfTargets = amountOfTargets + 2;
             }
-
-            //check if all targets are shot down
-            //if not reset targets if timer reaches activeTimeSeconds
-            //if yes set timer to activeTimeSeconds 
 
             coordCounter++;
             indicatorsSpawned = !indicatorsSpawned;
@@ -155,8 +152,6 @@ public class MainGameController : MonoBehaviour
             Destroy(indicator2, 0);
             spawnTimer = 0;
             targets.Clear();
-            //StartCoroutine(Wait(3));
-            //checkPostion = !checkPostion;
             StartCoroutine(DisplayGreatText(1));
             indicatorsSpawned = !indicatorsSpawned;
             currentFigure.SetActive(false);
@@ -175,8 +170,6 @@ public class MainGameController : MonoBehaviour
             }
             targets.Clear();
             amountOfTargets = 0;
-            //StartCoroutine(Wait(3));
-            //checkPostion = !checkPostion;
             StartCoroutine(Display_not_Ok_Text(1));
             indicatorsSpawned = !indicatorsSpawned;
             currentFigure.SetActive(false);
@@ -188,11 +181,6 @@ public class MainGameController : MonoBehaviour
         {
             coordCounter = 0;
         }
-
-        //float distanceInd1LeftHand = Vector3.Distance(indicator1.transform.position,
-        //    leftHand.transform.position);
-        //float distanceInd2RightHand = Vector3.Distance(indicator2.transform.position,
-        //    rightHand.transform.position);
 
         leftInPosition = checkDistance(indicator1, leftHand, shootThreshold);
         rightInPosition = checkDistance(indicator2, rightHand, shootThreshold);
@@ -348,8 +336,17 @@ public class MainGameController : MonoBehaviour
 
     public void PlayEndGameScene()
     {
-        SceneManager.LoadScene(2);
+        //SceneManager.LoadScene(2);
+        if (NiceSceneTransition.instance != null)
+        {
 
+            NiceSceneTransition.instance.LoadScene("Scene_EndGame");
+        }
+        else
+        {
+
+            SceneManager.LoadScene("Scene_EndGame", LoadSceneMode.Single);
+        }
     }
 }
 

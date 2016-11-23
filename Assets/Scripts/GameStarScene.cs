@@ -72,7 +72,15 @@ public class GameStarScene : MonoBehaviour {
         //yield return new WaitForSeconds(time);
 
         //start_text.SetActive(false);
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        if (NiceSceneTransition.instance != null)
+        {
+            NiceSceneTransition.instance.LoadScene("MainScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+        }
 
     }
 

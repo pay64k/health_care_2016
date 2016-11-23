@@ -9,7 +9,6 @@ public class End_game_script : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
         yourScore = GameObject.Find("Score").GetComponent<TextMesh>().text;
         End_score.GetComponent<TextMesh>().text = yourScore;
         StartCoroutine(Blink_text(0.7f));
@@ -43,9 +42,23 @@ public class End_game_script : MonoBehaviour {
         End_score.SetActive(false);
 
         Destroy(GameObject.Find("Score"));
-        Destroy(GameObject.Find("Music"));
-        SceneManager.LoadScene(0);
+        //Destroy(GameObject.Find("Music"));
+        nextScene();
 
+
+    }
+
+    void nextScene()
+    {
+        if (NiceSceneTransition.instance != null)
+        {
+            NiceSceneTransition.instance.LoadScene("Scene_StartScene");
+        }
+        else
+        {
+
+            SceneManager.LoadScene("Scene_StartScene", LoadSceneMode.Single);
+        }
     }
 
 }
