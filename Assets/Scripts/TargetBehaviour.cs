@@ -20,7 +20,7 @@ public class TargetBehaviour : MonoBehaviour {
         swing = 1f;
         originalPosition = transform.position;
         //print("Orignial Position" + originalPosition.ToString());
-        multi = Random.Range(1, 3);
+        multi = Random.Range(1, 4);
     }
 	
 	void Update () {
@@ -41,12 +41,15 @@ public class TargetBehaviour : MonoBehaviour {
         //transform.position = new Vector3(Mathf.PingPong(Time.time * 2, max - min) + min, originalPosition.y, originalPosition.z);
 
         var tempPosition = transform.position;
+        var tempRotation = transform.rotation;
         //max = Random.Range(3, 10);
         //min = Random.Range(1, 2);
         //min = 1f;
         var newX = Mathf.PingPong(Time.time * multi, max - min) + min;// *Time.deltaTime;
+        var newRot = Mathf.PingPong(Time.time * multi, max - min) + min;// *Time.deltaTime;
         //newX = newX * Time.deltaTime;
         transform.position = new Vector3(newX + originalPosition.x, originalPosition.y, originalPosition.z);
+        //transform.rotation = 
         
 	}
 

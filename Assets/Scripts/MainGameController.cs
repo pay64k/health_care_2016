@@ -38,6 +38,9 @@ public class MainGameController : MonoBehaviour
     private int coordCounter;
     private int coordAmount;
 
+    private ArrayList targets;
+    private int amountOfTargets;
+
     //Variables for debugging
     private GameObject left_light;
     private GameObject right_light;
@@ -55,6 +58,9 @@ public class MainGameController : MonoBehaviour
         coordList = fillCoordList(coordList);
         coordCounter = 0;
         coordAmount = coordList.Count;
+
+        targets = new ArrayList();
+        amountOfTargets = 4;
 
     }
 
@@ -77,15 +83,23 @@ public class MainGameController : MonoBehaviour
 
             //}
 
-            GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 10), this.transform.rotation) as GameObject;
-            GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
-            GameObject newObject3 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 15), this.transform.rotation) as GameObject;
-            GameObject newObject4 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
+            //GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 10), this.transform.rotation) as GameObject;
+            //GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
+            //GameObject newObject3 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 15), this.transform.rotation) as GameObject;
+            //GameObject newObject4 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
 
-            GameObject newObject5 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 10), this.transform.rotation) as GameObject;
-            GameObject newObject6 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
-            GameObject newObject7 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 15), this.transform.rotation) as GameObject;
-            GameObject newObject8 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
+            //GameObject newObject5 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 10), this.transform.rotation) as GameObject;
+            //GameObject newObject6 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
+            //GameObject newObject7 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 15), this.transform.rotation) as GameObject;
+            //GameObject newObject8 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordRight + new Vector3(0, 17.5f), this.transform.rotation) as GameObject;
+
+            for (float i = 10f; i <= amountOfTargets; i = i + 2.5f)
+            {
+                SpawnEnemy(targetPrefab, coordList, "LEFT", new Vector3(0, 10f), coordCounter);
+                SpawnEnemy(targetPrefab, coordList, "RIGHT", new Vector3(0, 10f), coordCounter);
+            }
+
+
 
             //check if all targets are shot down
             //if not reset targets if timer reaches activeTimeSeconds
@@ -205,6 +219,22 @@ public class MainGameController : MonoBehaviour
         //list.Add(new Coordinates(new Vector3(-3.0f, -3.7f, -8.1f), new Vector3(3.5f, -3.8f, -8.5f)));
 
         return list;
+    }
+
+    GameObject SpawnEnemy(GameObject targetPrefab, ArrayList coordList, string side, Vector3 offset, int postitionCounter)
+    {
+        if (side.Equals("LEFT"))
+        {
+            GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[postitionCounter]).coordLeft + offset, this.transform.rotation) as GameObject;
+            return target;
+        }
+        else
+        {
+            GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[postitionCounter]).coordRight + offset, this.transform.rotation) as GameObject;
+            return target;
+        }
+
+        
     }
 
     void saveDistanceToVariable(GameObject obj, float dist)
