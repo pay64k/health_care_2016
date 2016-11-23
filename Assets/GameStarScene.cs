@@ -7,6 +7,8 @@ public class GameStarScene : MonoBehaviour {
 
     public GameObject start_text;
     public GameObject countdown_text;
+    public GameObject info_text;
+    public GameObject audio;
 
     private float timer;
     private float limit;
@@ -16,8 +18,9 @@ public class GameStarScene : MonoBehaviour {
         timer = 0;
         limit = 1.5f;
         countdown_text.SetActive(false);
+        DontDestroyOnLoad(audio);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -32,29 +35,43 @@ public class GameStarScene : MonoBehaviour {
 
     IEnumerator StartGame(float time)
     {
-        var i = 5;
-        countdown_text.SetActive(true);
         start_text.SetActive(false);
-        countdown_text.GetComponent<TextMesh>().text = i.ToString();
-        i = i - 1;
-        yield return new WaitForSeconds(time);
-        countdown_text.SetActive(true);
-        start_text.SetActive(false);
-        countdown_text.GetComponent<TextMesh>().text = i.ToString();
-        i = i - 1;
-        yield return new WaitForSeconds(time);
-        countdown_text.SetActive(true);
-        start_text.SetActive(false);
-        countdown_text.GetComponent<TextMesh>().text = i.ToString();
-        i = i - 1;
-        yield return new WaitForSeconds(time);
-        countdown_text.SetActive(true);
-        start_text.SetActive(false);
-        countdown_text.GetComponent<TextMesh>().text = i.ToString();
-        i = i - 1;
-        yield return new WaitForSeconds(time);
+        info_text.SetActive(false);
 
-        start_text.SetActive(false);
+        var i = 5;
+        string pre = "starting in ";
+
+        countdown_text.SetActive(true);
+        countdown_text.GetComponent<TextMesh>().text = pre + i.ToString();
+        i = i - 1;
+
+        yield return new WaitForSeconds(time);
+        countdown_text.SetActive(true);
+        countdown_text.GetComponent<TextMesh>().text = pre + i.ToString();
+        i = i - 1;
+
+        yield return new WaitForSeconds(time);
+        countdown_text.SetActive(true);
+        countdown_text.GetComponent<TextMesh>().text = pre + i.ToString();
+        i = i - 1;
+
+        yield return new WaitForSeconds(time);
+        countdown_text.SetActive(true);
+        countdown_text.GetComponent<TextMesh>().text = pre + i.ToString();
+        i = i - 1;
+
+        yield return new WaitForSeconds(time);
+        countdown_text.SetActive(true);
+        countdown_text.GetComponent<TextMesh>().text = pre + i.ToString();
+        i = i - 1;
+
+        yield return new WaitForSeconds(time);
+        countdown_text.SetActive(true);
+        countdown_text.GetComponent<TextMesh>().text = pre + i.ToString();
+
+        //yield return new WaitForSeconds(time);
+
+        //start_text.SetActive(false);
         SceneManager.LoadScene(1);
 
     }

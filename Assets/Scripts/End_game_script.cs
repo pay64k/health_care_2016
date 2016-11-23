@@ -39,6 +39,11 @@ public class End_game_script : MonoBehaviour {
         End_score.SetActive(false);
         yield return new WaitForSeconds(time);
         End_score.SetActive(true);
+        yield return new WaitForSeconds(time);
+        End_score.SetActive(false);
+
+        Destroy(GameObject.Find("Score"));
+        Destroy(GameObject.Find("Music"));
         SceneManager.LoadScene(0);
 
     }
