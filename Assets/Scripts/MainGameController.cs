@@ -38,6 +38,7 @@ public class MainGameController : MonoBehaviour
     private int coordCounter;
     private int coordAmount;
 	public GameObject[] figures;
+	private GameObject currentFigure;
 
     public ArrayList targets;
     public int amountOfTargets;
@@ -62,6 +63,10 @@ public class MainGameController : MonoBehaviour
 
         targets = new ArrayList();
         amountOfTargets = 0;
+
+		foreach (GameObject obj in figures) {
+			obj.SetActive (false);
+		}
 
     }
 
@@ -108,11 +113,6 @@ public class MainGameController : MonoBehaviour
             coordCounter++;
             indicatorsSpawned = !indicatorsSpawned;
 
-            //if all figures has been shown then start from beginning
-            if (coordCounter >= coordAmount)
-            {
-                coordCounter = 0;
-            }
         }
 
         if (amountOfTargets == 0)
@@ -122,6 +122,7 @@ public class MainGameController : MonoBehaviour
             spawnTimer = 0;
             targets.Clear();
             indicatorsSpawned = !indicatorsSpawned;
+			currentFigure.SetActive (false);
         }
 
         spawnTimer += Time.deltaTime;
@@ -138,7 +139,14 @@ public class MainGameController : MonoBehaviour
             targets.Clear();
             ExecuteAfterTime(4);
             indicatorsSpawned = !indicatorsSpawned;
+			currentFigure.SetActive (false);
         }
+
+		//if all figures has been shown then start from beginning
+		if (coordCounter >= coordAmount)
+		{
+			coordCounter = 0;
+		}
 
         //float distanceInd1LeftHand = Vector3.Distance(indicator1.transform.position,
         //    leftHand.transform.position);
@@ -214,14 +222,26 @@ public class MainGameController : MonoBehaviour
 
     ArrayList fillCoordList(ArrayList list)
     {
+		//actual coordinates
+
+		list.Add(new Coordinates(new Vector3(-13.7f, -4.0f, 0), new Vector3(13.3f, -4.4f, 0)));
+		list.Add(new Coordinates (new Vector3 (-2.5f, 8.9f, 0), new Vector3 (6.9f, -6.9f, 0)));
+		list.Add(new Coordinates(new Vector3(-5.9f, 6.6f, 0), new Vector3(5.3f, 5.9f, 0)));
+		list.Add(new Coordinates(new Vector3(-12.7f, -6.2f, 0), new Vector3(1.1f, 4.5f, 0)));
+		list.Add(new Coordinates(new Vector3(-4.7f, -4.8f, 0), new Vector3(4.6f, -4.7f, 0)));
+		list.Add(new Coordinates(new Vector3(-8.8f, -6.5f, 0), new Vector3(1.8f, 8.2f, 0)));
+		list.Add(new Coordinates(new Vector3(-12.3f, -13.0f, 0), new Vector3(12.2f, -12.8f, 0)));
+		list.Add(new Coordinates(new Vector3(-4.4f, 7.1f, 0), new Vector3(13.0f, -9.2f, 0)));
+
         // left and right indicator position
-        list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
-        list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
-        list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
-        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+       	//list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
+        //list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+		//list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
 
         //list.Add(new Coordinates(new Vector3(-7.6f, -6.3f, 4.8f), new Vector3(9.5f, -5.8f, 2.1f)));
         //list.Add(new Coordinates(new Vector3(0.0f, -3.8f, 0.9f), new Vector3(6.6f, -11, 1.1f)));
@@ -237,18 +257,23 @@ public class MainGameController : MonoBehaviour
         return list;
     }
 
-    GameObject SpawnEnemy(GameObject targetPrefab, ArrayList coordList, string side, Vector3 offset, int postitionCounter)
+    GameObject SpawnEnemy(GameObject targetPrefab, ArrayList coordList, string side, Vector3 offset, int positionCounter)
     {
+		currentFigure = figures [positionCounter];
+		currentFigure.SetActive (true);
+
         if (side.Equals("LEFT"))
         {
-            GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[postitionCounter]).coordLeft + offset, this.transform.rotation) as GameObject;
+            GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[positionCounter]).coordLeft + offset, this.transform.rotation) as GameObject;
             return target;
         }
         else
         {
-            GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[postitionCounter]).coordRight + offset, this.transform.rotation) as GameObject;
+            GameObject target = Instantiate(targetPrefab, ((Coordinates)coordList[positionCounter]).coordRight + offset, this.transform.rotation) as GameObject;
             return target;
         }
+
+
         
     }
 
