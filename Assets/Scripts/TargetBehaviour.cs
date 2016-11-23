@@ -60,8 +60,9 @@ public class TargetBehaviour : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        health -= 15;
+        health -= 20;
         Instantiate(explosion, transform.position - new Vector3(0,1.5f,0), transform.rotation);
+        controller.IncrementScore(20);
         if (health <= 0)
         {
             //this.GetComponent<Collider>().enabled = false;
