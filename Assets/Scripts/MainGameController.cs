@@ -37,6 +37,7 @@ public class MainGameController : MonoBehaviour
     private Coordinates coord;
     private int coordCounter;
     private int coordAmount;
+	public GameObject[] figures;
 
     public ArrayList targets;
     public int amountOfTargets;
