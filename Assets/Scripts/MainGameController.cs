@@ -16,6 +16,9 @@ public class MainGameController : MonoBehaviour
     public float leftDistance;
     public float rightDistance;
 
+    public GameObject text_Great;
+    public GameObject text_not_ok;
+
     private bool debugMode;
 
     private float shootThreshold;
@@ -32,6 +35,8 @@ public class MainGameController : MonoBehaviour
     private GameObject indicator2;
     private bool leftInPosition;
     private bool rightInPosition;
+
+    private bool checkPostion;
 
     private ArrayList coordList;
     private Coordinates coord;
@@ -62,6 +67,9 @@ public class MainGameController : MonoBehaviour
         targets = new ArrayList();
         amountOfTargets = 0;
 
+        checkPostion = true;
+
+
     }
 
     void Update()
@@ -76,12 +84,6 @@ public class MainGameController : MonoBehaviour
 
             //indicator1.transform.Rotate(Vector3.up, 120f);
 
-            //foreach(Coordinates cord in coordList)
-            //{
-            //    Instantiate(targetPrefab, coord.coordLeft, transform.rotation);
-            //    Instantiate(targetPrefab, coord.coordRight, transform.rotation);
-
-            //}
 
             //GameObject newObject1 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 10), this.transform.rotation) as GameObject;
             //GameObject newObject2 = Instantiate(targetPrefab, ((Coordinates)coordList[coordCounter]).coordLeft + new Vector3(0, 12.5f), this.transform.rotation) as GameObject;
@@ -120,6 +122,9 @@ public class MainGameController : MonoBehaviour
             Destroy(indicator2, 0);
             spawnTimer = 0;
             targets.Clear();
+            //StartCoroutine(Wait(3));
+            //checkPostion = !checkPostion;
+            StartCoroutine(DisplayGreatText(1));
             indicatorsSpawned = !indicatorsSpawned;
         }
 
@@ -135,23 +140,21 @@ public class MainGameController : MonoBehaviour
                 obj.GetComponent<TargetBehaviour>().PrematureDestroy();
             }
             targets.Clear();
-            ExecuteAfterTime(4);
+            //StartCoroutine(Wait(3));
+            //checkPostion = !checkPostion;
+            StartCoroutine(Display_not_Ok_Text(1));   
             indicatorsSpawned = !indicatorsSpawned;
         }
 
-        //float distanceInd1LeftHand = Vector3.Distance(indicator1.transform.position,
-        //    leftHand.transform.position);
-        //float distanceInd2RightHand = Vector3.Distance(indicator2.transform.position,
-        //    rightHand.transform.position);
-
-        leftInPosition = checkDistance(indicator1, leftHand, shootThreshold);
-        rightInPosition = checkDistance(indicator2, rightHand, shootThreshold);
-
-
+        if (checkPostion)
+        {
+            leftInPosition = checkDistance(indicator1, leftHand, shootThreshold);
+            rightInPosition = checkDistance(indicator2, rightHand, shootThreshold);
+        }
+        
         if (leftInPosition & debugMode)
         {
             left_light.SetActive(true);
-            //ShootWithInterval(shootIntervalTime, LeftHand);
 
         } else {
             left_light.SetActive(false);
@@ -159,7 +162,6 @@ public class MainGameController : MonoBehaviour
         if (rightInPosition & debugMode)
         {
             right_light.SetActive(true);
-            //ShootWithInterval(shootIntervalTime, RightHand);
 
         } else {
             right_light.SetActive(false);
@@ -170,7 +172,6 @@ public class MainGameController : MonoBehaviour
             ShootWithInterval(shootIntervalTime, leftHand);
             ShootWithInterval(shootIntervalTime, rightHand);
         }
-        //print(this.amountOfTargets);
     }
 
     void ShootWithInterval(float interval, GameObject shootSource)
@@ -267,19 +268,21 @@ public class MainGameController : MonoBehaviour
         }
     }
 
-    public float Bla()
+    IEnumerator DisplayGreatText(float time)
     {
-        return coordCounter;
-    }
-
-    IEnumerator ExecuteAfterTime(float time)
-    {
+        GameObject text = Instantiate(text_Great);
         yield return new WaitForSeconds(time);
-        print("BLA");
-        // Code to execute after the delay
+        Destroy(text);
+
     }
 
+    IEnumerator Display_not_Ok_Text(float time)
+    {
+        GameObject text = Instantiate(text_not_ok);
+        yield return new WaitForSeconds(time);
+        Destroy(text);
 
+    }
 
 }
 
