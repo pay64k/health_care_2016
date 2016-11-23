@@ -57,6 +57,7 @@ public class MainGameController : MonoBehaviour
     private float gameTime;
     private float currentGameTime;
 
+    private ArrayList ok_text_arraylist;
 
     //Variables for debugging
     private GameObject left_light;
@@ -84,11 +85,26 @@ public class MainGameController : MonoBehaviour
 
         gameTime = Config.gameTime;
         currentGameTime = 0;
+        text_Great.SetActive(false);
 
         foreach (GameObject obj in figures)
         {
             obj.SetActive(false);
         }
+
+        ok_text_arraylist = new ArrayList();
+
+        ok_text_arraylist.Add("Nice!");
+        ok_text_arraylist.Add("Great!");
+        ok_text_arraylist.Add("Yeah!");
+        ok_text_arraylist.Add("Sweet!");
+        ok_text_arraylist.Add("O'right!");
+        ok_text_arraylist.Add("WOW!");
+        ok_text_arraylist.Add("Amazing");
+        ok_text_arraylist.Add("Good shooting!");
+        ok_text_arraylist.Add("OMG!");
+        ok_text_arraylist.Add("Fantastic!");
+        ok_text_arraylist.Add("Excellent!");
 
 
     }
@@ -336,9 +352,11 @@ public class MainGameController : MonoBehaviour
 
     IEnumerator DisplayGreatText(float time)
     {
-        GameObject text = Instantiate(text_Great);
+
+        text_Great.SetActive(true);
+        text_Great.GetComponent<TextMesh>().text = ok_text_arraylist[Random.Range(0, ok_text_arraylist.Count)].ToString();
         yield return new WaitForSeconds(time);
-        Destroy(text);
+        text_Great.SetActive(false);
 
     }
 

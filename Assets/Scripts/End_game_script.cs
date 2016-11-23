@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class End_game_script : MonoBehaviour {
 
@@ -38,6 +39,8 @@ public class End_game_script : MonoBehaviour {
         End_score.SetActive(false);
         yield return new WaitForSeconds(time);
         End_score.SetActive(true);
+        SceneManager.LoadScene(0);
+
     }
 
 }
