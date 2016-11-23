@@ -19,6 +19,9 @@ public class MainGameController : MonoBehaviour
     public GameObject text_Great;
     public GameObject text_not_ok;
 
+    public GameObject scoreText;
+    private int score;
+
     private bool debugMode;
 
     private float shootThreshold;
@@ -42,15 +45,19 @@ public class MainGameController : MonoBehaviour
     private Coordinates coord;
     private int coordCounter;
     private int coordAmount;
+
 	public GameObject[] figures;
 	private GameObject currentFigure;
 
     public ArrayList targets;
     private int amountOfTargets;
 
+
+
     //Variables for debugging
     private GameObject left_light;
     private GameObject right_light;
+
     void Start()
     {
         left_light = GameObject.Find("Debugging/left_light");
@@ -68,7 +75,7 @@ public class MainGameController : MonoBehaviour
 
         targets = new ArrayList();
         amountOfTargets = 0;
-
+        score = 0;
 
 		foreach (GameObject obj in figures) {
 			obj.SetActive (false);
@@ -164,20 +171,20 @@ public class MainGameController : MonoBehaviour
         rightInPosition = checkDistance(indicator2, rightHand, shootThreshold);
 
 
-        if (leftInPosition & debugMode)
-        {
-            left_light.SetActive(true);
+        //if (leftInPosition & debugMode)
+        //{
+        //    left_light.SetActive(true);
 
-        } else {
-            left_light.SetActive(false);
-        }
-        if (rightInPosition & debugMode)
-        {
-            right_light.SetActive(true);
+        //} else {
+        //    left_light.SetActive(false);
+        //}
+        //if (rightInPosition & debugMode)
+        //{
+        //    right_light.SetActive(true);
 
-        } else {
-            right_light.SetActive(false);
-        }
+        //} else {
+        //    right_light.SetActive(false);
+        //}
 
         if (leftInPosition & rightInPosition)
         {
@@ -227,25 +234,25 @@ public class MainGameController : MonoBehaviour
     ArrayList fillCoordList(ArrayList list)
     {
 		//actual coordinates
+        //list.Add(new Coordinates(new Vector3(-13.7f, -4.0f, 0), new Vector3(13.3f, -4.4f, 0)));
+        //list.Add(new Coordinates(new Vector3(-2.5f, 8.9f, 0), new Vector3(6.9f, -6.9f, 0)));
+        //list.Add(new Coordinates(new Vector3(-5.9f, 6.6f, 0), new Vector3(5.3f, 5.9f, 0)));
+        //list.Add(new Coordinates(new Vector3(-12.7f, -6.2f, 0), new Vector3(1.1f, 4.5f, 0)));
+        //list.Add(new Coordinates(new Vector3(-4.7f, -4.8f, 0), new Vector3(4.6f, -4.7f, 0)));
+        //list.Add(new Coordinates(new Vector3(-8.8f, -6.5f, 0), new Vector3(1.8f, 8.2f, 0)));
+        //list.Add(new Coordinates(new Vector3(-12.3f, -13.0f, 0), new Vector3(12.2f, -12.8f, 0)));
+        //list.Add(new Coordinates(new Vector3(-4.4f, 7.1f, 0), new Vector3(13.0f, -9.2f, 0)));
 
-        list.Add(new Coordinates(new Vector3(-13.7f, -4.0f, 0), new Vector3(13.3f, -4.4f, 0)));
-        list.Add(new Coordinates(new Vector3(-2.5f, 8.9f, 0), new Vector3(6.9f, -6.9f, 0)));
-        list.Add(new Coordinates(new Vector3(-5.9f, 6.6f, 0), new Vector3(5.3f, 5.9f, 0)));
-        list.Add(new Coordinates(new Vector3(-12.7f, -6.2f, 0), new Vector3(1.1f, 4.5f, 0)));
-        list.Add(new Coordinates(new Vector3(-4.7f, -4.8f, 0), new Vector3(4.6f, -4.7f, 0)));
-        list.Add(new Coordinates(new Vector3(-8.8f, -6.5f, 0), new Vector3(1.8f, 8.2f, 0)));
-        list.Add(new Coordinates(new Vector3(-12.3f, -13.0f, 0), new Vector3(12.2f, -12.8f, 0)));
-        list.Add(new Coordinates(new Vector3(-4.4f, 7.1f, 0), new Vector3(13.0f, -9.2f, 0)));
 
         // left and right indicator position
-        //list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
 
         //list.Add(new Coordinates(new Vector3(-7.6f, -6.3f, 4.8f), new Vector3(9.5f, -5.8f, 2.1f)));
         //list.Add(new Coordinates(new Vector3(0.0f, -3.8f, 0.9f), new Vector3(6.6f, -11, 1.1f)));
@@ -284,6 +291,12 @@ public class MainGameController : MonoBehaviour
     public void DecrementEnemyCount()
     {
         amountOfTargets = amountOfTargets - 1;
+    }
+
+    public void IncrementScore(int amount)
+    {
+        score = score + amount;
+        scoreText.GetComponent<TextMesh>().text = "Score  " + score.ToString();
     }
 
     void saveDistanceToVariable(GameObject obj, float dist)
