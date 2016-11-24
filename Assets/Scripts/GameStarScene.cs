@@ -28,6 +28,14 @@ public class GameStarScene : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //SceneManager.LoadScene(1);
+
+            AudioSource audioObj = GameObject.Find("Music").GetComponent<AudioSource>();
+
+            if (!audioObj.isPlaying)
+            {
+                audioObj.Play();
+            }
+             
             StartCoroutine(StartGame(1));
         }
 	    
