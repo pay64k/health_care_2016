@@ -12,6 +12,8 @@ public class GameStarScene : MonoBehaviour {
 
     private float timer;
     private float limit;
+
+    private bool gameStarting;
 	// Use this for initialization
 	void Start () {
         //SceneManager.LoadScene(0);
@@ -19,24 +21,32 @@ public class GameStarScene : MonoBehaviour {
         limit = 1.5f;
         countdown_text.SetActive(false);
         DontDestroyOnLoad(audio_song);
-	}
+        gameStarting = false;
+
+    }
 
 	// Update is called once per frame
 	void Update () {
+
 
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //SceneManager.LoadScene(1);
 
-            AudioSource audioObj = GameObject.Find("Music").GetComponent<AudioSource>();
-
-            if (!audioObj.isPlaying)
+            if (!gameStarting)
             {
-                audioObj.Play();
+                gameStarting = true;
+                gameObject.GetComponent<AudioSource>().Play();
+                AudioSource audioObj = GameObject.Find("Music").GetComponent<AudioSource>();
+
+                if (!audioObj.isPlaying)
+                {
+                    audioObj.Play();
+                }
+
+                StartCoroutine(StartGame(1));
             }
-             
-            StartCoroutine(StartGame(1));
         }
 	    
 	}

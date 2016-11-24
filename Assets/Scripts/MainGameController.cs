@@ -148,6 +148,7 @@ public class MainGameController : MonoBehaviour
 
         if (amountOfTargets == 0)
         {
+            gameObject.GetComponent<AudioSource>().Play();
             Destroy(indicator1, 0);
             Destroy(indicator2, 0);
             spawnTimer = 0;
