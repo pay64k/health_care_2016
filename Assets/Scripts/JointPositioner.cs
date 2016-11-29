@@ -4,7 +4,7 @@ using System.Collections;
 public class JointPositioner : MonoBehaviour {
 	
 	public KinectWrapper.Joints JointToTrack;
-	public KUInterface Kinect;
+	private KUInterface Kinect;
     public GameConfig Config;
 
     public bool mirrored;
@@ -23,6 +23,7 @@ public class JointPositioner : MonoBehaviour {
     void Start () {
         debugMode = Config.handMouseControl;
         easyMode = Config.easyMode;
+        Kinect = (KUInterface)FindObjectOfType(typeof(KUInterface));
     }
 	
 	// Update is called once per frame
