@@ -10,6 +10,8 @@ public class GameStarScene : MonoBehaviour {
     public GameObject info_text;
     public GameObject audio_song;
 
+    private KUInterface Kinect;
+
     private float timer;
     private float limit;
 
@@ -22,13 +24,12 @@ public class GameStarScene : MonoBehaviour {
         countdown_text.SetActive(false);
         DontDestroyOnLoad(audio_song);
         gameStarting = false;
-
+        Kinect = (KUInterface)FindObjectOfType(typeof(KUInterface));
+        DontDestroyOnLoad(Kinect);
     }
 
 	// Update is called once per frame
 	void Update () {
-
-
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
