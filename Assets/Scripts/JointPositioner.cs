@@ -23,6 +23,7 @@ public class JointPositioner : MonoBehaviour {
     void Start () {
         debugMode = Config.handMouseControl;
         easyMode = Config.easyMode;
+
     }
 	
 	// Update is called once per frame
