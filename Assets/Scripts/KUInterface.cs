@@ -20,6 +20,21 @@ using System.Collections;
 /// </summary>
 public class KUInterface : MonoBehaviour {
 
+    public static KUInterface instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            instance = this;
+        }
+        else
+        {
+            Destroy(transform.gameObject);
+        }
+    }
+
     //public variables
     /// <summary>
     /// scales all joint positions by given amount. Do not set to zero.
