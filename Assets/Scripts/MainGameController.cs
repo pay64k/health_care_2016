@@ -250,26 +250,26 @@ public class MainGameController : MonoBehaviour
 
     ArrayList fillCoordList(ArrayList list)
     {
-        //actual coordinates
-        list.Add(new Coordinates(new Vector3(-13.7f, -4.0f, 0), new Vector3(13.3f, -4.4f, 0)));
-        list.Add(new Coordinates(new Vector3(-2.5f, 8.9f, 0), new Vector3(6.9f, -6.9f, 0)));
-        list.Add(new Coordinates(new Vector3(-5.9f, 6.6f, 0), new Vector3(5.3f, 5.9f, 0)));
-        list.Add(new Coordinates(new Vector3(-12.7f, -6.2f, 0), new Vector3(1.1f, 4.5f, 0)));
-        list.Add(new Coordinates(new Vector3(-4.7f, -4.8f, 0), new Vector3(4.6f, -4.7f, 0)));
-        list.Add(new Coordinates(new Vector3(-8.8f, -6.5f, 0), new Vector3(1.8f, 8.2f, 0)));
-        list.Add(new Coordinates(new Vector3(-12.3f, -13.0f, 0), new Vector3(12.2f, -12.8f, 0)));
-        list.Add(new Coordinates(new Vector3(-4.4f, 7.1f, 0), new Vector3(13.0f, -9.2f, 0)));
+        ////actual coordinates
+        //list.Add(new Coordinates(new Vector3(-13.7f, -4.0f, 0), new Vector3(13.3f, -4.4f, 0)));
+        //list.Add(new Coordinates(new Vector3(-2.5f, 8.9f, 0), new Vector3(6.9f, -6.9f, 0)));
+        //list.Add(new Coordinates(new Vector3(-5.9f, 6.6f, 0), new Vector3(5.3f, 5.9f, 0)));
+        //list.Add(new Coordinates(new Vector3(-12.7f, -6.2f, 0), new Vector3(1.1f, 4.5f, 0)));
+        //list.Add(new Coordinates(new Vector3(-4.7f, -4.8f, 0), new Vector3(4.6f, -4.7f, 0)));
+        //list.Add(new Coordinates(new Vector3(-8.8f, -6.5f, 0), new Vector3(1.8f, 8.2f, 0)));
+        //list.Add(new Coordinates(new Vector3(-12.3f, -13.0f, 0), new Vector3(12.2f, -12.8f, 0)));
+        //list.Add(new Coordinates(new Vector3(-4.4f, 7.1f, 0), new Vector3(13.0f, -9.2f, 0)));
 
 
         //debug coordinates
-        //list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
-        //list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -3, 0), new Vector3(5, -3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -2, 0), new Vector3(5, -2, 0)));
+        list.Add(new Coordinates(new Vector3(-5, -1, 0), new Vector3(5, -1, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 0, 0), new Vector3(5, 0, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 1, 0), new Vector3(5, 1, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 2, 0), new Vector3(5, 2, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
+        list.Add(new Coordinates(new Vector3(-5, 3, 0), new Vector3(5, 3, 0)));
 
         return list;
     }
